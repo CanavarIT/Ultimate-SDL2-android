@@ -43,7 +43,8 @@ for entry in "${LIBS[@]}"; do
     done
 done
 
-for NAME in SDL2 SDL2_image SDL2_net SDL2_mixer SDL2_ttf; do
+bash "$(dirname "$0")/scripts/build-gfx.sh"
+for NAME in SDL2 SDL2_image SDL2_net SDL2_mixer SDL2_ttf SDL2_gfx; do
     TMP=$(mktemp -d)
     for ABI in $ABIS; do
         mkdir -p "$TMP/$ABI"

@@ -12,6 +12,7 @@ compiled from source with the official Android NDK.
 | SDL2_mixer | 2.8.1 | libsdl-org/SDL_mixer |
 | SDL2_net | 2.2.0 | libsdl-org/SDL_net |
 | SDL2_ttf | 2.24.0 | libsdl-org/SDL_ttf |
+| SDL2_gfx | 1.0.4 | ferzkopp.net |
 
 ## Supported ABIs
 
@@ -83,6 +84,7 @@ Build a single library:
 ./scripts/build-mixer.sh
 ./scripts/build-net.sh
 ./scripts/build-ttf.sh
+./scripts/build-gfx.sh
 ```
 
 Install trees are written to release/<library>/<abi>/.
