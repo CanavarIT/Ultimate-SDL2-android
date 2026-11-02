@@ -1,39 +1,58 @@
 # Ultimate SDL2 for Android (prebuilt)
 
-Prebuilt [SDL2](https://github.com/libsdl-org/SDL) 2.30.11 and its satellite libraries
-for Android, compiled from source with the official Android NDK.
+Prebuilt SDL2 2.30.11 and its satellite libraries for Android,
+compiled from source with the official Android NDK.
 
 ## Included libraries
 
 | Library | Version | Upstream |
 |---------|---------|----------|
-| SDL2 | 2.30.11 | [libsdl-org/SDL](https://github.com/libsdl-org/SDL) |
-| SDL2_image | 2.8.3 | [libsdl-org/SDL_image](https://github.com/libsdl-org/SDL_image) |
-| SDL2_mixer | 2.8.1 | [libsdl-org/SDL_mixer](https://github.com/libsdl-org/SDL_mixer) |
-| SDL2_net | 2.2.0 | [libsdl-org/SDL_net](https://github.com/libsdl-org/SDL_net) |
-| SDL2_ttf | 2.24.0 | [libsdl-org/SDL_ttf](https://github.com/libsdl-org/SDL_ttf) |
+| SDL2 | 2.30.11 | libsdl-org/SDL |
+| SDL2_image | 2.8.3 | libsdl-org/SDL_image |
+| SDL2_mixer | 2.8.1 | libsdl-org/SDL_mixer |
+| SDL2_net | 2.2.0 | libsdl-org/SDL_net |
+| SDL2_ttf | 2.24.0 | libsdl-org/SDL_ttf |
 
 ## Supported ABIs
 
-- `arm64-v8a` (ARM 64-bit)
-- `armeabi-v7a` (ARM 32-bit)
-- `x86` (Intel 32-bit)
-- `x86_64` (Intel 64-bit)
-
-All binaries target **Android API 24** (Android 7.0) and were built with
-**NDK r29 (29.0.14206865)**.
+arm64-v8a, armeabi-v7a, x86, x86_64.
+API 24 (Android 7.0), NDK r29 (29.0.14206865).
 
 ## Download
 
-Grab the archive for the library you need from the
-[Releases](https://github.com/CanavarIT/Ultimate-SDL2-android/releases) page:
+See the Releases page:
+https://github.com/CanavarIT/Ultimate-SDL2-android/releases
 
-| Library | Archive |
-|---------|---------|
-| SDL2 2.30.11 | [`SDL2-2.30.11-android-all.tar.gz`](https://github.com/CanavarIT/Ultimate-SDL2-android/releases/download/v1.0/SDL2-2.30.11-android-all.tar.gz) |
-| SDL2_image 2.8.3 | [`SDL2_image-2.8.3-android-all.tar.gz`](https://github.com/CanavarIT/Ultimate-SDL2-android/releases/download/v1.0/SDL2_image-2.8.3-android-all.tar.gz) |
-| SDL2_mixer 2.8.1 | [`SDL2_mixer-2.8.1-android-all.tar.gz`](https://github.com/CanavarIT/Ultimate-SDL2-android/releases/download/v1.0/SDL2_mixer-2.8.1-android-all.tar.gz) |
-| SDL2_net 2.2.0 | [`SDL2_net-2.2.0-android-all.tar.gz`](https://github.com/CanavarIT/Ultimate-SDL2-android/releases/download/v1.0/SDL2_net-2.2.0-android-all.tar.gz) |
-| SDL2_ttf 2.24.0 | [`SDL2_ttf-2.24.0-android-all.tar.gz`](https://github.com/CanavarIT/Ultimate-SDL2-android/releases/download/v1.0/SDL2_ttf-2.24.0-android-all.tar.gz) |
+Each archive contains one folder per ABI (arm64-v8a/, armeabi-v7a/, x86/, x86_64/).
 
-Each archive contains one folder per ABI:
+## Usage
+
+### CMake
+
+set(SDL2_DIR "${CMAKE_SOURCE_DIR}/third_party/SDL2/arm64-v8a/lib/cmake/SDL2")
+find_package(SDL2 REQUIRED)
+target_link_libraries(myapp PRIVATE SDL2::SDL2)
+
+### jniLibs
+
+Copy .so files from the ABI folder into app/src/main/jniLibs/<abi>/.
+
+For SDL2_image and SDL2_mixer you must also copy vendored .so files:
+- SDL2_image: libpng16.so, libjpeg.so, libwebp.so, libwebpdemux.so, libtiff.so
+- SDL2_mixer: libogg.so, libopus.so, libopusfile.so, libwavpack.so
+
+SDL2_ttf statically links FreeType, no extra .so needed.
+
+## Notes
+
+Binaries are unstripped (debug info included) for easier debugging.
+AGP strips them automatically when building a release APK.
+
+## Building from source
+
+Requirements: NDK r29, CMake 3.5+, Bash.
+Run ./build-all.sh with ANDROID_NDK_HOME set.
+
+## License
+
+zlib license. See LICENSE.
