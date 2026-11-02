@@ -15,7 +15,11 @@ compiled from source with the official Android NDK.
 
 ## Supported ABIs
 
-arm64-v8a, armeabi-v7a, x86, x86_64.
+- arm64-v8a (ARM 64-bit)
+- armeabi-v7a (ARM 32-bit)
+- x86 (Intel 32-bit)
+- x86_64 (Intel 64-bit)
+
 API 24 (Android 7.0), NDK r29 (29.0.14206865).
 
 ## Download
@@ -23,21 +27,24 @@ API 24 (Android 7.0), NDK r29 (29.0.14206865).
 See the Releases page:
 https://github.com/CanavarIT/Ultimate-SDL2-android/releases
 
-Each archive contains one folder per ABI (arm64-v8a/, armeabi-v7a/, x86/, x86_64/).
+Each archive contains one folder per ABI.
 
 ## Usage
 
 ### CMake
 
+```cmake
 set(SDL2_DIR "${CMAKE_SOURCE_DIR}/third_party/SDL2/arm64-v8a/lib/cmake/SDL2")
 find_package(SDL2 REQUIRED)
 target_link_libraries(myapp PRIVATE SDL2::SDL2)
+```
 
 ### jniLibs
 
 Copy .so files from the ABI folder into app/src/main/jniLibs/<abi>/.
 
 For SDL2_image and SDL2_mixer you must also copy vendored .so files:
+
 - SDL2_image: libpng16.so, libjpeg.so, libwebp.so, libwebpdemux.so, libtiff.so
 - SDL2_mixer: libogg.so, libopus.so, libopusfile.so, libwavpack.so
 
@@ -50,8 +57,35 @@ AGP strips them automatically when building a release APK.
 
 ## Building from source
 
-Requirements: NDK r29, CMake 3.5+, Bash.
-Run ./build-all.sh with ANDROID_NDK_HOME set.
+Requirements:
+
+- Android NDK r29 (29.0.14206865) or compatible
+- CMake 3.5+
+- Bash, wget
+
+Set the NDK path:
+
+```bash
+export ANDROID_NDK_HOME=/path/to/android-ndk-r29
+```
+
+Build everything:
+
+```bash
+./build-all.sh
+```
+
+Build a single library:
+
+```bash
+./scripts/build-sdl2.sh
+./scripts/build-image.sh
+./scripts/build-mixer.sh
+./scripts/build-net.sh
+./scripts/build-ttf.sh
+```
+
+Install trees are written to release/<library>/<abi>/.
 
 ## License
 
